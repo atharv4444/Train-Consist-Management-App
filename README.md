@@ -2,11 +2,50 @@
 
 Train Consist Management System implemented using **Core Java** and **data structures** (primarily `LinkedList<Coach>`).
 
+## Prerequisites
+
+- Java JDK installed (Java 17+ recommended)
+- `javac` and `java` available in `PATH`
+
 ## Run
 
 ```bash
 javac -d out src/*.java
 java -cp out Main
+```
+
+## Git Workflow (Strict)
+
+- Base branch: `dev`
+- Feature branches (one per use case):
+  - `feature/usecase-1-initialize-consist`
+  - `feature/usecase-2-add-coach`
+  - `feature/usecase-3-remove-coach`
+  - `feature/usecase-4-reorder-coaches`
+  - `feature/usecase-5-search-coach`
+  - `feature/usecase-6-validate-consist`
+  - `feature/usecase-7-display-consist`
+- `main` is never merged into; all merges land in `dev`.
+
+### Commands Used (Sequence)
+
+```bash
+# Clone
+git clone https://github.com/atharv4444/Train-Consist-Management-App.git
+
+# Create dev
+git checkout -b dev
+
+# For each use case (example)
+git checkout dev
+git checkout -b feature/<usecase-branch>
+
+# ... implement ...
+git add .
+git commit -m "<clear message>"
+
+git checkout dev
+git merge --no-ff feature/<usecase-branch> -m "merge: <usecase>"
 ```
 
 ## Use Cases
