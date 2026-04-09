@@ -34,3 +34,10 @@ java -cp out Main
 ### UC5 — Search Coach
 
 - Performs a **linear search** through the `LinkedList` to find a coach by ID and returns position/details.
+
+### UC6 — Validate Consist
+
+- Validates:
+  - duplicate coach IDs
+  - ordering rules (ENGINE first if present, GUARD last if present)
+  - simple capacity constraints (per coach + total)

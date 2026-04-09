@@ -22,6 +22,7 @@ public class Main {
                 System.out.println("2) UC3 - Remove Coach (by ID)");
                 System.out.println("3) UC4 - Reorder Coaches (move by index)");
                 System.out.println("4) UC5 - Search Coach (by ID)");
+                System.out.println("5) UC6 - Validate Consist");
                 System.out.println("0) Exit");
                 System.out.print("Choose: ");
 
@@ -95,6 +96,19 @@ public class Main {
                         }
                     } catch (RuntimeException ex) {
                         System.out.println("Search failed: " + ex.getMessage());
+                    }
+                    continue;
+                }
+
+                if ("5".equals(choice)) {
+                    TrainConsist.ValidationReport report = consist.validateConsist();
+                    if (report.isValid()) {
+                        System.out.println("Consist is VALID.");
+                    } else {
+                        System.out.println("Consist is INVALID. Issues:");
+                        for (String issue : report.getIssues()) {
+                            System.out.println("- " + issue);
+                        }
                     }
                     continue;
                 }
