@@ -30,3 +30,7 @@ java -cp out Main
 ### UC4 — Reorder Coaches
 
 - Moves a coach from one index to another (simulates shunting) using remove+add on `LinkedList`.
+
+### UC5 — Search Coach
+
+- Performs a **linear search** through the `LinkedList` to find a coach by ID and returns position/details.

@@ -114,6 +114,45 @@ public class TrainConsist {
     }
 
     /**
+     * UC5: Linear search for a coach by ID.
+     *
+     * @return 0-based index if found, otherwise -1
+     */
+    public int indexOfCoachById(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Coach ID cannot be null/blank");
+        }
+
+        String target = id.trim();
+        int index = 0;
+        for (Coach coach : coaches) {
+            if (coach.getId().equals(target)) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+
+    /**
+     * UC5: Returns the coach object if it exists, otherwise null.
+     * This is also implemented using linear search.
+     */
+    public Coach findCoachById(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Coach ID cannot be null/blank");
+        }
+
+        String target = id.trim();
+        for (Coach coach : coaches) {
+            if (coach.getId().equals(target)) {
+                return coach;
+            }
+        }
+        return null;
+    }
+
+    /**
      * UC7 will evolve display; UC1 prints a minimal summary.
      */
     public String summary() {
