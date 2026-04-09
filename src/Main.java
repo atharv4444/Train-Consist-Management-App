@@ -23,6 +23,7 @@ public class Main {
                 System.out.println("3) UC4 - Reorder Coaches (move by index)");
                 System.out.println("4) UC5 - Search Coach (by ID)");
                 System.out.println("5) UC6 - Validate Consist");
+                System.out.println("6) UC7 - Display Consist");
                 System.out.println("0) Exit");
                 System.out.print("Choose: ");
 
@@ -110,6 +111,11 @@ public class Main {
                             System.out.println("- " + issue);
                         }
                     }
+                    continue;
+                }
+
+                if ("6".equals(choice)) {
+                    System.out.println(consist.displayConsist());
                     continue;
                 }
 

@@ -41,3 +41,7 @@ java -cp out Main
   - duplicate coach IDs
   - ordering rules (ENGINE first if present, GUARD last if present)
   - simple capacity constraints (per coach + total)
+
+### UC7 — Display Consist
+
+- Prints the current consist in a readable, indexed table format.
