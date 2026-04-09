@@ -16,3 +16,9 @@ java -cp out Main
 - Creates an empty `TrainConsist` backed by `LinkedList<Coach>`.
 - Prints the initial consist summary.
 
+### UC2 — Add Coach
+
+- Adds a coach at:
+  - beginning (`addFirst`)
+  - end (`addLast`)
+  - specific position (`add(index, coach)`)
