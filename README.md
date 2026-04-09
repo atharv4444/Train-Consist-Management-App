@@ -26,3 +26,7 @@ java -cp out Main
 ### UC3 — Remove Coach
 
 - Removes a coach by **Coach ID** using linear traversal and safe iterator removal.
+
+### UC4 — Reorder Coaches
+
+- Moves a coach from one index to another (simulates shunting) using remove+add on `LinkedList`.

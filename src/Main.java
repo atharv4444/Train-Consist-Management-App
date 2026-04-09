@@ -20,6 +20,7 @@ public class Main {
                 System.out.println("Menu");
                 System.out.println("1) UC2 - Add Coach");
                 System.out.println("2) UC3 - Remove Coach (by ID)");
+                System.out.println("3) UC4 - Reorder Coaches (move by index)");
                 System.out.println("0) Exit");
                 System.out.print("Choose: ");
 
@@ -56,6 +57,27 @@ public class Main {
                         System.out.println("Removed: " + removed);
                     }
                     System.out.println(consist.summary());
+                    continue;
+                }
+
+                if ("3".equals(choice)) {
+                    if (consist.isEmpty()) {
+                        System.out.println("Consist is empty.");
+                        continue;
+                    }
+
+                    int maxIndex = consist.size() - 1;
+                    System.out.print("Move from index (0.." + maxIndex + "): ");
+                    int from = readInt(scanner);
+                    System.out.print("Move to index (0.." + maxIndex + "): ");
+                    int to = readInt(scanner);
+
+                    try {
+                        consist.moveCoach(from, to);
+                        System.out.println("Reordered. " + consist.summary());
+                    } catch (RuntimeException ex) {
+                        System.out.println("Reorder failed: " + ex.getMessage());
+                    }
                     continue;
                 }
 

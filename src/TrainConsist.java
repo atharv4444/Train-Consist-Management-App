@@ -85,6 +85,35 @@ public class TrainConsist {
     }
 
     /**
+     * UC4: Reorder coaches by moving a coach from one index to another.
+     *
+     * Indexing:
+     * - Both indices are 0-based positions in the list *before* the move.
+     * - If moving forward (toIndex > fromIndex), the insertion index is adjusted
+     *   after removal to keep the "target position" intuitive.
+     */
+    public void moveCoach(int fromIndex, int toIndex) {
+        int size = coaches.size();
+        if (size == 0) {
+            throw new IllegalStateException("Cannot reorder an empty consist");
+        }
+        if (fromIndex < 0 || fromIndex >= size) {
+            throw new IndexOutOfBoundsException("fromIndex must be in range [0, " + (size - 1) + "]");
+        }
+        if (toIndex < 0 || toIndex >= size) {
+            throw new IndexOutOfBoundsException("toIndex must be in range [0, " + (size - 1) + "]");
+        }
+        if (fromIndex == toIndex) {
+            return; // No-op
+        }
+
+        Coach coach = coaches.remove(fromIndex);
+        // After removal, elements shift left. Adjust when moving forward.
+        int adjustedToIndex = (toIndex > fromIndex) ? (toIndex - 1) : toIndex;
+        coaches.add(adjustedToIndex, coach);
+    }
+
+    /**
      * UC7 will evolve display; UC1 prints a minimal summary.
      */
     public String summary() {
