@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * TrainConsist manages the ordered collection of coaches.
@@ -59,6 +60,28 @@ public class TrainConsist {
             );
         }
         coaches.add(index, coach);
+    }
+
+    /**
+     * UC3: Remove a coach by its ID.
+     *
+     * @return removed coach if found, otherwise null
+     */
+    public Coach removeCoachById(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Coach ID cannot be null/blank");
+        }
+
+        String target = id.trim();
+        // Using ListIterator to safely remove during traversal.
+        for (ListIterator<Coach> it = coaches.listIterator(); it.hasNext(); ) {
+            Coach current = it.next();
+            if (current.getId().equals(target)) {
+                it.remove();
+                return current;
+            }
+        }
+        return null;
     }
 
     /**

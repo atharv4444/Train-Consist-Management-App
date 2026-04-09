@@ -22,3 +22,7 @@ java -cp out Main
   - beginning (`addFirst`)
   - end (`addLast`)
   - specific position (`add(index, coach)`)
+
+### UC3 — Remove Coach
+
+- Removes a coach by **Coach ID** using linear traversal and safe iterator removal.
