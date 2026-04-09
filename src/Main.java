@@ -19,6 +19,7 @@ public class Main {
                 System.out.println();
                 System.out.println("Menu");
                 System.out.println("1) UC2 - Add Coach");
+                System.out.println("2) UC3 - Remove Coach (by ID)");
                 System.out.println("0) Exit");
                 System.out.print("Choose: ");
 
@@ -27,24 +28,41 @@ public class Main {
                     System.out.println("Goodbye.");
                     return;
                 }
-                if (!"1".equals(choice)) {
-                    System.out.println("Invalid choice.");
+
+                if ("1".equals(choice)) {
+                    Coach coach = readCoach(scanner);
+                    int index = readInsertIndex(scanner, consist.size());
+
+                    if (index == 0) {
+                        consist.addCoachAtBeginning(coach);
+                    } else if (index == consist.size()) {
+                        // After reading the index, size() is still the current size.
+                        consist.addCoachAtEnd(coach);
+                    } else {
+                        consist.addCoachAtPosition(coach, index);
+                    }
+
+                    System.out.println("Added coach. " + consist.summary());
                     continue;
                 }
 
-                Coach coach = readCoach(scanner);
-                int index = readInsertIndex(scanner, consist.size());
-
-                if (index == 0) {
-                    consist.addCoachAtBeginning(coach);
-                } else if (index == consist.size()) {
-                    // After reading the index, size() is still the current size.
-                    consist.addCoachAtEnd(coach);
-                } else {
-                    consist.addCoachAtPosition(coach, index);
+                if ("2".equals(choice)) {
+                    System.out.print("Enter Coach ID to remove: ");
+                    String id = scanner.nextLine();
+                    Coach removed = consist.removeCoachById(id);
+                    if (removed == null) {
+                        System.out.println("No coach found with ID: " + id);
+                    } else {
+                        System.out.println("Removed: " + removed);
+                    }
+                    System.out.println(consist.summary());
+                    continue;
                 }
 
-                System.out.println("Added coach. " + consist.summary());
+                // Default case
+                {
+                    System.out.println("Invalid choice.");
+                }
             }
         }
     }
