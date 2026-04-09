@@ -1,5 +1,9 @@
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * TrainConsist manages the ordered collection of coaches.
@@ -9,6 +13,39 @@ import java.util.ListIterator;
  */
 public class TrainConsist {
     private final LinkedList<Coach> coaches;
+
+    // Capacity constraints (simple defaults; can be tuned to requirements).
+    private static final int MAX_PASSENGER_CAPACITY = 200;
+    private static final int MAX_CARGO_CAPACITY = 500;
+    private static final int MAX_GUARD_CAPACITY = 50;
+    private static final int MAX_TOTAL_CAPACITY = 2000;
+
+    /**
+     * Validation report object (kept as a nested class to maintain 3-file structure).
+     */
+    public static class ValidationReport {
+        private final List<String> issues;
+
+        private ValidationReport(List<String> issues) {
+            this.issues = issues;
+        }
+
+        public boolean isValid() {
+            return issues.isEmpty();
+        }
+
+        public List<String> getIssues() {
+            return issues;
+        }
+
+        @Override
+        public String toString() {
+            if (isValid()) {
+                return "ValidationReport{valid=true}";
+            }
+            return "ValidationReport{valid=false, issues=" + issues + "}";
+        }
+    }
 
     public TrainConsist() {
         // UC1: Initialize empty consist using LinkedList.
@@ -150,6 +187,100 @@ public class TrainConsist {
             }
         }
         return null;
+    }
+
+    /**
+     * UC6: Validate consist rules.
+     *
+     * Rules implemented:
+     * - No duplicate coach IDs.
+     * - If ENGINE exists, it must be first and unique.
+     * - If GUARD exists, it must be last and unique.
+     * - Simple per-coach capacity limits (by type) + total capacity limit.
+     */
+    public ValidationReport validateConsist() {
+        List<String> issues = new ArrayList<>();
+
+        // 1) Duplicate ID check
+        Set<String> ids = new HashSet<>();
+        for (Coach coach : coaches) {
+            if (!ids.add(coach.getId())) {
+                issues.add("Duplicate coach ID found: " + coach.getId());
+            }
+        }
+
+        // 2) Ordering rules: ENGINE first (if present), GUARD last (if present)
+        int engineCount = 0;
+        int guardCount = 0;
+        int index = 0;
+        int totalCapacity = 0;
+
+        for (Coach coach : coaches) {
+            Coach.Type type = coach.getType();
+
+            if (type == Coach.Type.ENGINE) {
+                engineCount++;
+                if (index != 0) {
+                    issues.add("ENGINE coach must be at index 0, found at index " + index);
+                }
+                if (coach.getCapacity() != 0) {
+                    issues.add("ENGINE coach capacity must be 0, found: " + coach.getCapacity());
+                }
+            }
+
+            if (type == Coach.Type.GUARD) {
+                guardCount++;
+                if (index != coaches.size() - 1) {
+                    issues.add("GUARD coach must be last, found at index " + index);
+                }
+            }
+
+            // 3) Capacity constraints (per-coach)
+            int capacity = coach.getCapacity();
+            switch (type) {
+                case PASSENGER:
+                    if (capacity <= 0 || capacity > MAX_PASSENGER_CAPACITY) {
+                        issues.add("PASSENGER coach " + coach.getId() + " capacity must be in [1.." +
+                                MAX_PASSENGER_CAPACITY + "], found: " + capacity);
+                    }
+                    break;
+                case CARGO:
+                    if (capacity <= 0 || capacity > MAX_CARGO_CAPACITY) {
+                        issues.add("CARGO coach " + coach.getId() + " capacity must be in [1.." +
+                                MAX_CARGO_CAPACITY + "], found: " + capacity);
+                    }
+                    break;
+                case GUARD:
+                    if (capacity <= 0 || capacity > MAX_GUARD_CAPACITY) {
+                        issues.add("GUARD coach " + coach.getId() + " capacity must be in [1.." +
+                                MAX_GUARD_CAPACITY + "], found: " + capacity);
+                    }
+                    break;
+                case ENGINE:
+                    // Already handled above.
+                    break;
+                default:
+                    // Defensive - should never happen since Type is an enum.
+                    issues.add("Unknown coach type for " + coach.getId() + ": " + type);
+            }
+
+            totalCapacity += capacity;
+            index++;
+        }
+
+        if (engineCount > 1) {
+            issues.add("Only one ENGINE coach is allowed, found: " + engineCount);
+        }
+        if (guardCount > 1) {
+            issues.add("Only one GUARD coach is allowed, found: " + guardCount);
+        }
+
+        // 4) Total capacity constraint
+        if (totalCapacity > MAX_TOTAL_CAPACITY) {
+            issues.add("Total capacity exceeded: " + totalCapacity + " > " + MAX_TOTAL_CAPACITY);
+        }
+
+        return new ValidationReport(issues);
     }
 
     /**
