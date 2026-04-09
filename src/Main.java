@@ -21,6 +21,7 @@ public class Main {
                 System.out.println("1) UC2 - Add Coach");
                 System.out.println("2) UC3 - Remove Coach (by ID)");
                 System.out.println("3) UC4 - Reorder Coaches (move by index)");
+                System.out.println("4) UC5 - Search Coach (by ID)");
                 System.out.println("0) Exit");
                 System.out.print("Choose: ");
 
@@ -77,6 +78,23 @@ public class Main {
                         System.out.println("Reordered. " + consist.summary());
                     } catch (RuntimeException ex) {
                         System.out.println("Reorder failed: " + ex.getMessage());
+                    }
+                    continue;
+                }
+
+                if ("4".equals(choice)) {
+                    System.out.print("Enter Coach ID to search: ");
+                    String id = scanner.nextLine();
+                    try {
+                        int index = consist.indexOfCoachById(id);
+                        if (index < 0) {
+                            System.out.println("Not found.");
+                        } else {
+                            Coach coach = consist.findCoachById(id);
+                            System.out.println("Found at index " + index + ": " + coach);
+                        }
+                    } catch (RuntimeException ex) {
+                        System.out.println("Search failed: " + ex.getMessage());
                     }
                     continue;
                 }
