@@ -284,6 +284,32 @@ public class TrainConsist {
     }
 
     /**
+     * UC7: Display the current train consist arrangement in a readable format.
+     */
+    public String displayConsist() {
+        if (coaches.isEmpty()) {
+            return "Train Consist is EMPTY.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Train Consist (").append(coaches.size()).append(" coaches)").append(System.lineSeparator());
+        sb.append("Idx | ID     | Type       | Capacity").append(System.lineSeparator());
+        sb.append("----+--------+------------+---------").append(System.lineSeparator());
+
+        int index = 0;
+        for (Coach coach : coaches) {
+            sb.append(String.format("%3d | %-6s | %-10s | %8d",
+                    index,
+                    coach.getId(),
+                    coach.getType(),
+                    coach.getCapacity()
+            )).append(System.lineSeparator());
+            index++;
+        }
+        return sb.toString();
+    }
+
+    /**
      * UC7 will evolve display; UC1 prints a minimal summary.
      */
     public String summary() {
