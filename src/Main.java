@@ -29,6 +29,7 @@ public class Main {
                 System.out.println("7) UC17 - Sort Bogie Names");
                 System.out.println("8) UC18 - Linear Search for Bogie ID");
                 System.out.println("9) UC19 - Binary Search for Bogie ID");
+                System.out.println("10) UC20 - Exception Handling During Search");
                 System.out.println("0) Exit");
                 System.out.print("Choose: ");
 
@@ -127,7 +128,7 @@ public class Main {
                     UseCase17.execute();
                     continue;
                 }
-                
+
                 if ("8".equals(choice)) {
                     UseCase18.execute();
                     continue;
@@ -135,6 +136,11 @@ public class Main {
 
                 if ("9".equals(choice)) {
                     UseCase19.execute();
+                    continue;
+                }
+                
+                if ("10".equals(choice)) {
+                    UseCase20.execute();
                     continue;
                 }
 
