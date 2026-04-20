@@ -1,3 +1,5 @@
+package src;
+
 import java.util.Scanner;
 
 /**
@@ -13,7 +15,7 @@ public class Main {
         TrainConsist consist = new TrainConsist();
         System.out.println("UC1 - Initialize Consist: " + consist.summary());
 
-        // UC2: Basic menu to add coaches.
+        // Basic menu to interact with the application.
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 System.out.println();
@@ -24,6 +26,7 @@ public class Main {
                 System.out.println("4) UC5 - Search Coach (by ID)");
                 System.out.println("5) UC6 - Validate Consist");
                 System.out.println("6) UC7 - Display Consist");
+                System.out.println("7) UC17 - Sort Bogie Names");
                 System.out.println("0) Exit");
                 System.out.print("Choose: ");
 
@@ -116,6 +119,11 @@ public class Main {
 
                 if ("6".equals(choice)) {
                     System.out.println(consist.displayConsist());
+                    continue;
+                }
+
+                if ("7".equals(choice)) {
+                    UseCase17.execute();
                     continue;
                 }
 
