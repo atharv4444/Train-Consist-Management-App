@@ -27,6 +27,8 @@ public class Main {
                 System.out.println("5) UC6 - Validate Consist");
                 System.out.println("6) UC7 - Display Consist");
                 System.out.println("7) UC17 - Sort Bogie Names");
+                System.out.println("8) UC18 - Linear Search for Bogie ID");
+                System.out.println("9) UC19 - Binary Search for Bogie ID");
                 System.out.println("0) Exit");
                 System.out.print("Choose: ");
 
@@ -43,7 +45,6 @@ public class Main {
                     if (index == 0) {
                         consist.addCoachAtBeginning(coach);
                     } else if (index == consist.size()) {
-                        // After reading the index, size() is still the current size.
                         consist.addCoachAtEnd(coach);
                     } else {
                         consist.addCoachAtPosition(coach, index);
@@ -124,6 +125,16 @@ public class Main {
 
                 if ("7".equals(choice)) {
                     UseCase17.execute();
+                    continue;
+                }
+                
+                if ("8".equals(choice)) {
+                    UseCase18.execute();
+                    continue;
+                }
+
+                if ("9".equals(choice)) {
+                    UseCase19.execute();
                     continue;
                 }
 
